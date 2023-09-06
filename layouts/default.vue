@@ -19,7 +19,7 @@
     </v-app>
 </template>
 <script setup>
-import SideNav from '~/components/Nav/SideNav.vue'
+// import SideNav from '~/components/Nav/SideNav.vue'
 
 let sideNavOpened = useState('sideNavOpened', () => false)
 let addNote = useState(() => false)
@@ -35,6 +35,14 @@ const addNewNote = () => {
     addNote.value = true
     console.log(addNote.value)
 }
+
+// onMounted(() => {
+//     if (process.browser) {
+//         console.log('client', window)
+//     } else {
+//         console.log('server', window)
+//     }
+// })
 
 </script>
 <style lang="scss">

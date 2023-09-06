@@ -19,7 +19,7 @@
                     </div>
 
                     <div class="tw-absolute tw-w-full tw-bottom-4 tw-mx-auto tw-flex tw-justify-center">
-                        <v-btn color="primary" icon>
+                        <v-btn @click="$emit('logout')" color="primary" icon>
                             <v-icon>mdi-logout</v-icon>
                         </v-btn>
                     </div>
@@ -30,7 +30,7 @@
 </template>
 <script setup>
 const drawer = useState('drawer', () => true)
-const emit = defineEmits(['drawer', 'add-new'])
+const emit = defineEmits(['drawer', 'add-new', 'logout'])
 
 const props = defineProps({
     showSideNav: {

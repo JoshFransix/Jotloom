@@ -25,6 +25,9 @@ module.exports = {
         lg: { max: '1023px' },
         // => @media (max-width: 1023px) { ... }
 
+        'md-lg': { max: '900px' },
+        // => @media (max-width: 1023px) { ... }
+
         md: { max: '767px' },
         // => @media (max-width: 767px) { ... }
 
@@ -33,7 +36,8 @@ module.exports = {
       },
       colors: {
         brand: {
-          primary: '#2fc7de'
+          primary: '#2fc7de',
+          'primary-light': '#14203b'
         },
       },
     },

@@ -25,7 +25,7 @@
                 </div>
             </div>
         </v-navigation-drawer>
-        <v-app-bar elevate-on-scroll elevation="0" color="secondary" app height="85">
+        <v-app-bar scroll-behavior="elevate" elevation="0" color="secondary" app height="85">
             <div class="tw-w-10/12 tw-mx-auto tw-flex tw-justify-between tw-items-center">
                 <nuxt-link to="/">
                     <div class="logo tw-font-bold tw-text-xl">

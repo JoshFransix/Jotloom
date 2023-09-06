@@ -21,6 +21,11 @@
     "vite-plugin-vuetify": "^1.0.2"
   },
   "dependencies": {
+    "@pinia/nuxt": "^0.4.11",
+    "pinia": "^2.1.6",
     "vuetify": "^3.3.14"
+  },
+  "overrides": {
+    "vue": "latest"
   }
 }

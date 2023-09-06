@@ -1,7 +1,7 @@
 <template>
     <div>
         <div
-            class="card tw-relative tw-w-[300px] tw-h-[200px] tw-bg-[#14203B] tw-rounded-xl tw-border-[0.1px] tw-border-[rgba(255,255,255,0.1)]">
+            class="card tw-relative tw-w-full tw-h-[200px] tw-bg-[#14203B] tw-rounded-xl tw-border-[0.1px] tw-border-[rgba(255,255,255,0.1)]">
             <div class="tw-overflow-hidden tw-m-6">
                 <h1>{{ note.title.length <= 30 ? note.title : note.title.slice(0, 30) + '...' }}</h1>
                         <p class="tw-opacity-40 tw-w-full tw-text-sm tw-mt-6">{{ note.content.length <= 55 ? note.content :

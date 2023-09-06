@@ -1,7 +1,6 @@
 <template>
     <div class="tw-relative tw-mt-9 tw-grid tw-grid-cols-4 tw-gap-4 xl:tw-grid-cols-3">
-        <Note @click="() => console.log(allNotes)" v-for="note in allNotes" :key="note.title" @edit="editNote"
-            @delete="openDelete" :note="note" />
+        <Note v-for="note in allNotes" :key="note.title" @edit="editNote" @delete="openDelete" :note="note" />
         <!-- <template >
             <v-fade-transition>
             </v-fade-transition>
@@ -111,7 +110,7 @@ const editNote = (note) => {
 }
 
 const saveNote = () => {
-    // console.log(updatedNote)
+    console.log(updatedNote)
     sr.stop()
     emit('save-note', updatedNote)
     editNoteDialog.value = false;

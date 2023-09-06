@@ -32,7 +32,7 @@ export default defineNuxtConfig({
       mode: "out-in", // default
     },
   },
-  devtools: { enabled: false },
+  devtools: { enabled: true },
   devServer: {
     port: 9000,
   },
@@ -58,7 +58,24 @@ export default defineNuxtConfig({
 
     "@nuxtjs/google-fonts",
     "@nuxtjs/supabase",
+    "@pinia/nuxt",
   ],
+
+  pinia: {
+    autoImports: [
+      // automatically imports `defineStore`
+      "defineStore", // import { defineStore } from 'pinia'
+      ["definePiniaStore", "acceptHMRUpdate"], // import { defineStore as definePiniaStore } from 'pinia'
+    ],
+  },
+
+  imports: {
+    dirs: ["stores"],
+  },
+
+  supabase: {
+    redirect: false,
+  },
 
   // Google fonts
   googleFonts: {

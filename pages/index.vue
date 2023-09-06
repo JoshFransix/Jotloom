@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="tw-overflow-x-hidden">
         <div>
             <nav-bar />
         </div>
@@ -8,7 +8,7 @@
                 <h1 class="tw-text-3xl tw-leading-[1.4rem] tw-text-center tw-font-bold ">Sculpting the future<span
                         class="tw-text-brand-primary"> Jotspace</span></h1>
                 <p class="tw-my-7 fira">Write and organize your thoughts <span class="tw-text-brand-primary">.</span></p>
-                <div>
+                <div class="tw-h-full">
                     <landing-image class="tw-w-[500px] tw-h-[500px]" />
                 </div>
             </div>

@@ -3,13 +3,13 @@
         <div>
             <div class="left">
                 <v-slide-x-transition leave-absolute hide-on-leave>
-                    <div class="tw-w-8/12 tw-mx-auto tw-mt-10 md:tw-w-10/12" v-if="!signUp">
-                        <AuthLogin @signup="toSignUp" />
+                    <div class="tw-w-8/12 tw-mx-auto tw-mt-10 lg:tw-w-10/12" v-if="!signUp">
+                        <AuthLogin @toSignup="toSignUp" @login="processLogin" @google-login="googleLogin" />
                     </div>
                 </v-slide-x-transition>
                 <v-slide-x-transition leave-absolute hide-on-leave>
-                    <div class="tw-w-8/12 tw-mx-auto tw-mt-10 md:tw-w-10/12" v-if="signUp">
-                        <AuthSignUp @login="toLogin" />
+                    <div class="tw-w-8/12 tw-mx-auto tw-mt-10 lg:tw-w-10/12" v-if="signUp">
+                        <AuthSignUp @toLogin="toLogin" @signUp="processSignUp" />
                     </div>
                 </v-slide-x-transition>
             </div>
@@ -18,8 +18,12 @@
         <div
             class="right tw-select-none tw-pointer-events-none tw-bg-brand-primary tw-flex tw-justify-center tw-items-center tw-h-full">
             <!-- <landing-image class="tw-w-1/2 tw-h-1/2" /> -->
-            <img v-if="signUp" src="@/assets/svg/saly-11.svg" alt="" class="tw-w-2/3 tw-h-2/3">
-            <img v-else src="@/assets/svg/saly-10.svg" alt="" class="tw-w-2/3 tw-h-2/3">
+            <v-slide-x-reverse-transition leave-absolute hide-on-leave>
+                <img v-if="signUp" src="@/assets/svg/saly-11.svg" alt="" class="tw-w-2/3 tw-h-2/3">
+            </v-slide-x-reverse-transition>
+            <v-slide-x-reverse-transition leave-absolute hide-on-leave>
+                <img v-if="!signUp" src="@/assets/svg/saly-10.svg" alt="" class="tw-w-2/3 tw-h-2/3">
+            </v-slide-x-reverse-transition>
         </div>
         <div @click="$router.push('/')" class="tw-absolute tw-top-9 tw-left-9">
             <v-btn color="transparent" icon>
@@ -27,17 +31,38 @@
                 <v-tooltip activator="parent" location="bottom">Back to home</v-tooltip>
             </v-btn>
         </div>
+
+        <v-snackbar :color="alertColor" v-model="snackbar" location="top right" position="fixed">
+            {{ alertText }}
+
+            <template v-slot:actions>
+                <v-btn icon color="white" variant="text" @click="snackbar = false">
+                    <v-icon>mdi-close</v-icon>
+                </v-btn>
+            </template>
+        </v-snackbar>
     </div>
 </template>
-<script setup>
+<script setup lang="ts">
+
+import { storeToRefs } from 'pinia'
+
+const authStore = useAuth()
+
+const alertText = ref('')
+const alertColor = ref('')
+const snackbar = ref(false)
 const route = useRoute()
 const router = useRouter()
+
+
+const client = useSupabaseClient()
 
 definePageMeta({
     layout: "landing",
 });
 
-const signUp = useState('signUp', () => false)
+const signUp = ref(false)
 
 onBeforeMount(() => {
     if ('login' in route.query || 'signin' in route.query) {
@@ -47,23 +72,106 @@ onBeforeMount(() => {
     }
 })
 
+const testAddUser = (value: any) => {
+    authStore.SET_AUTH({ ...value })
+
+    setTimeout(() => {
+        const { user } = storeToRefs(authStore)
+        console.log(user.value)
+    }, 3000)
+
+}
+
+async function googleLogin() {
+    try {
+        const { data, error } = await client.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+                queryParams: {
+                    access_type: 'offline',
+                    prompt: 'consent',
+                },
+            },
+        })
+        if (error) throw error
+        console.log(data)
+    } catch (error: any) {
+        alertText.value = error.message
+        alertColor.value = 'red'
+        snackbar.value = true
+    }
+}
+
+async function processSignUp(value: any) {
+    const { fullName, email, password } = value
+    try {
+        authStore.SET_LOADER(true)
+        const { data, error } = await client.auth.signUp({
+            email, password, options: {
+                data: {
+                    fullName
+                }
+            }
+        })
+        if (error) throw error
+        authStore.SET_LOADER(false)
+        alertText.value = 'Account successfully created'
+        alertColor.value = 'green'
+        snackbar.value = true
+        setTimeout(() => {
+            router.push('/dashboard')
+        }, 1000)
+        // console.log(user)
+    } catch (error: any) {
+        authStore.SET_LOADER(false)
+        alertText.value = error.message
+        alertColor.value = 'red'
+        snackbar.value = true
+    }
+
+}
+
+async function processLogin(value: any) {
+    // console.log(value)
+    try {
+        authStore.SET_LOADER(true)
+        const { data, error } = await client.auth.signInWithPassword({ ...value })
+        if (error) throw error
+        authStore.SET_LOADER(false)
+        alertText.value = 'Login successful'
+        alertColor.value = 'green'
+        snackbar.value = true
+        setTimeout(() => {
+            router.push('/dashboard')
+        }, 1000)
+        // console.log(data)
+    } catch (error: any) {
+        authStore.SET_LOADER(false)
+        alertText.value = error.message
+        alertColor.value = 'red'
+        snackbar.value = true
+    }
+}
+
 const toLogin = () => {
-    console.log('login')
+    // console.log('login')
     router.push('/auth?login')
     signUp.value = false
+    // console.log(client.auth.signUp({}))
 }
 const toSignUp = () => {
-    console.log('signup')
+    // console.log('signup')
     router.push('/auth?signup')
     signUp.value = true
 }
+
 </script>
 <style lang="scss" scoped>
 .auth-landing {
     height: 100vh;
     display: flex;
     align-items: center;
-    overflow-y: hidden;
+    overflow-x: hidden;
 
     .left {
         width: 50vw;
