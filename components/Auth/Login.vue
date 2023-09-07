@@ -35,7 +35,7 @@
                     class="disabled:tw-bg-slate-300 tw-text-white tw-rounded-lg tw-py-8 tw-mt-6 tw-font-bold tw-transition tw-duration-200 hover:tw-bg-gray-300"
                     :loading="isLoading"><span>Login</span></v-btn>
             </v-form>
-            <h2 class="tw-text-sm tw-text-[#a1a1a1] tw-mt-4">
+            <h2 class="tw-text-sm tw-mb-4 tw-text-[#a1a1a1] tw-mt-4">
                 Don't have an account,
                 <span @click="$emit('toSignup')" class="tw-text-brand-primary tw-cursor-pointer">Sign up?</span>
             </h2>
@@ -46,9 +46,7 @@
                     <h2>Login with google</h2>
                 </v-btn>
             </div>
-            <!-- <div
-                class="tw-mt-4 tw-flex tw-justify-center tw-text-brand-primary tw-py-3 tw-rounded-lg tw-border-brand-primary tw-border tw-bg-brand-primary-light">
-            </div> -->
+
         </div>
     </div>
 </template>
@@ -64,7 +62,7 @@ const valid = useState('valid', () => false)
 const keepMeLoggedIn = useState('keepMeLoggedIn', () => false)
 const showPassword = useState('showPassword', () => false)
 
-const emit = defineEmits(['login', 'toSignup'])
+const emit = defineEmits(['login', 'toSignup', 'google-login'])
 
 const processLogin = () => {
     const details = {
@@ -72,8 +70,8 @@ const processLogin = () => {
         password: password.value
     }
     emit('login', { ...details })
-
 }
+
 
 const passwordRules = [
     value => {

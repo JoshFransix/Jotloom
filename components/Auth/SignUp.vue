@@ -44,7 +44,8 @@
                 <span @click="$emit('toLogin')" class="tw-text-brand-primary tw-cursor-pointer">Login?</span>
             </h2>
             <div class="tw-mt-8">
-                <v-btn rounded height="50" color="primary" block variant="tonal" class="rounded-lg primary--text">
+                <v-btn @click="$emit('google-signup')" rounded height="50" color="primary" block variant="tonal"
+                    class="rounded-lg primary--text">
                     <v-icon class="mr-3">mdi-google</v-icon>
                     <h2>Signup with google</h2>
                 </v-btn>
@@ -66,11 +67,11 @@ const valid = useState('valid', () => false)
 const keepMeLoggedIn = useState('keepMeLoggedIn', () => false)
 const showPassword = useState('showPassword', () => false)
 
-const emit = defineEmits(['signUp', 'toLogin'])
+const emit = defineEmits(['signUp', 'toLogin', 'google-signup'])
 
 const processSignUp = () => {
     const details = {
-        fullName: fullName.value,
+        full_name: fullName.value,
         email: email.value,
         password: password.value
     }

@@ -19,16 +19,19 @@
                     </div>
 
                     <div class="tw-absolute tw-w-full tw-bottom-4 tw-mx-auto tw-flex tw-justify-center">
-                        <v-btn @click="$emit('logout')" color="primary" icon>
+                        <v-btn @click="logoutActive(true)" color="primary" icon>
                             <v-icon>mdi-logout</v-icon>
                         </v-btn>
                     </div>
                 </div>
             </v-navigation-drawer>
         </div>
+        <Logout @close-dialog="logoutActive(false)" />
     </div>
 </template>
 <script setup>
+import Logout from '~/components/Logout.vue'
+
 const drawer = useState('drawer', () => true)
 const emit = defineEmits(['drawer', 'add-new', 'logout'])
 
@@ -48,6 +51,12 @@ watch(showSideNav, (bool, showSideNav) => {
 watch(drawer, (d, drawerValue) => {
     emit('drawer', drawer.value)
 })
+
+const authStore = useAuth()
+
+const logoutActive = (value) => {
+    authStore.SET_LOGOUT(value)
+}
 
 
 

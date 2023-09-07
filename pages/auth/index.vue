@@ -9,7 +9,7 @@
                 </v-slide-x-transition>
                 <v-slide-x-transition leave-absolute hide-on-leave>
                     <div class="tw-w-8/12 tw-mx-auto tw-mt-10 lg:tw-w-10/12" v-if="signUp">
-                        <AuthSignUp @toLogin="toLogin" @signUp="processSignUp" />
+                        <AuthSignUp @toLogin="toLogin" @signUp="processSignUp" @google-signup="googleLogin" />
                     </div>
                 </v-slide-x-transition>
             </div>
@@ -45,8 +45,6 @@
 </template>
 <script setup lang="ts">
 
-import { storeToRefs } from 'pinia'
-
 const authStore = useAuth()
 
 const alertText = ref('')
@@ -57,6 +55,7 @@ const router = useRouter()
 
 
 const client = useSupabaseClient()
+const user = useSupabaseUser()
 
 definePageMeta({
     layout: "landing",
@@ -69,32 +68,21 @@ onBeforeMount(() => {
         signUp.value = false
     } else if ('signup' in route.query) {
         signUp.value = true
+        console.log(user.value)
     }
 })
 
-const testAddUser = (value: any) => {
-    authStore.SET_AUTH({ ...value })
-
-    setTimeout(() => {
-        const { user } = storeToRefs(authStore)
-        console.log(user.value)
-    }, 3000)
-
-}
-
 async function googleLogin() {
+    // await client.auth.signOut()
     try {
         const { data, error } = await client.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                queryParams: {
-                    access_type: 'offline',
-                    prompt: 'consent',
-                },
-            },
+                redirectTo: 'http://localhost:9000/dashboard'
+            }
         })
         if (error) throw error
-        console.log(data)
+        // console.log(user.value)
     } catch (error: any) {
         alertText.value = error.message
         alertColor.value = 'red'
@@ -103,13 +91,13 @@ async function googleLogin() {
 }
 
 async function processSignUp(value: any) {
-    const { fullName, email, password } = value
+    const { full_name, email, password } = value
     try {
         authStore.SET_LOADER(true)
         const { data, error } = await client.auth.signUp({
             email, password, options: {
                 data: {
-                    fullName
+                    full_name
                 }
             }
         })

@@ -5,6 +5,7 @@ export const useAuth = defineStore({
   state: () => ({
     user: null,
     isLoading: false,
+    logoutDialog: false,
   }),
 
   getters: {
@@ -19,6 +20,9 @@ export const useAuth = defineStore({
     },
     SET_LOADER(payload: boolean) {
       this.isLoading = payload;
+    },
+    SET_LOGOUT(payload: boolean) {
+      this.logoutDialog = payload;
     },
   },
 });

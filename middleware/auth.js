@@ -4,5 +4,7 @@ export default defineNuxtRouteMiddleware(() => {
   if (!user.value) {
     console.log(user.value);
     return navigateTo("/");
+  } else {
+    console.log(user.value)
   }
 });

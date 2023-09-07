@@ -16,7 +16,9 @@
                 <v-menu :close-on-content-click="false" transition="slide-x-reverse-transition">
                     <template v-slot:activator="{ props }">
                         <div v-bind="props" class="tw-cursor-pointer tw-rounded-full tw-p-1">
-                            <v-avatar color="primary">{{ getFirstLetter() }}</v-avatar>
+                            <v-avatar v-if="user.user_metadata.picture" :image="user.user_metadata.picture"
+                                color="primary"></v-avatar>
+                            <v-avatar v-else color="primary">{{ getFirstLetter() }}</v-avatar>
                             <!-- <v-icon>mdi-chevron-down</v-icon> -->
                         </div>
                     </template>
@@ -27,7 +29,7 @@
                         </div>
                         <v-divider></v-divider>
                         <v-list bg-color="transparent">
-                            <v-list-item @click="logoutDialog = true" prepend-icon="mdi-logout" title="Logout"
+                            <v-list-item @click="logoutActive(true)" prepend-icon="mdi-logout" title="Logout"
                                 value="logout"></v-list-item>
                         </v-list>
                     </v-card>
@@ -70,22 +72,7 @@
         </v-dialog>
 
         <!-- Logout dialog -->
-        <v-dialog persistent v-model="logoutDialog" max-width="500px" scrollable>
-            <div class="tw-rounded-xl tw-text-white tw-w-full tw-bg-slate-700 tw-mx-auto tw-py-12 tw-px-6 sm:tw-text-sm">
-                <h1 class="fira tw-font-semibold tw-text-center tw-text-xl sm:tw-text-sm">
-                    Logout
-                </h1>
-                <div class="tw-text-center tw-mt-4">
-                    <h3 class="tw-text-sm">Are you sure you want to logout?</h3>
-                    <div class="tw-mt-8">
-                        <v-btn rounded class="mr-3" color="primaryLight" @click="logoutDialog = false"
-                            depressed>Cancel</v-btn>
-
-                        <v-btn :loading="loadLogout" @click="logout" rounded color="primary" depressed>Continue</v-btn>
-                    </div>
-                </div>
-            </div>
-        </v-dialog>
+        <Logout @close-dialog="logoutActive(false)" />
 
         <v-snackbar v-model="snackbar" :color="alertColor" location="top" position="fixed" multi-line>
             {{ alertText }}
@@ -101,6 +88,7 @@
 <script setup>
 import Notes from "~/components/Dashboard/Notes.vue";
 import SideNav from "~/components/Nav/SideNav.vue";
+import Logout from '~/components/Logout.vue'
 
 definePageMeta({
     middleware: ["auth"]
@@ -110,13 +98,11 @@ const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const sr = new Recognition()
 
 const user = useSupabaseUser()
-const client = useSupabaseClient()
-const fullName = user.value.user_metadata.fullName
+
+const fullName = user.value.user_metadata.full_name
 
 const router = useRouter()
 
-const logoutDialog = ref(false);
-const loadLogout = ref(false)
 const search = ref("");
 const isRecording = ref(false);
 const snackbar = ref(false);
@@ -160,24 +146,12 @@ const getFirstLetter = () => {
     return fullName[0].toUpperCase()
 }
 
+const authStore = useAuth()
 
-async function logout() {
-    try {
-        loadLogout.value = true
-        const { error } = await client.auth.signOut()
-        console.log(user.value)
-        if (error) throw error
-        setTimeout(() => {
-            loadLogout.value = false
-            window.location = '/'
-        }, 500)
-    } catch (error) {
-        loadLogout.value = false
-        alertText.value = error.message
-        alertColor.value = 'red'
-        snackbar.value = true
-    }
+const logoutActive = (value) => {
+    authStore.SET_LOGOUT(value)
 }
+
 
 // watchEffect(() => {
 //     if (newNote.value) {
@@ -220,9 +194,9 @@ const startRecording = () => {
     }
 };
 
-// const logItem = () => {
-//     console.log(user.value.user_metadata)
-// }
+const logItem = () => {
+    console.log(user.value)
+}
 
 
 const toggleRecord = () => {
