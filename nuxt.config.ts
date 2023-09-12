@@ -59,12 +59,7 @@ export default defineNuxtConfig({
     "@nuxtjs/google-fonts",
     "@nuxtjs/supabase",
     "@pinia/nuxt",
-    "nuxt-vue3-google-signin",
   ],
-
-  googleSignIn: {
-    clientId: process.env.CLIENT_ID,
-  },
 
   pinia: {
     autoImports: [
