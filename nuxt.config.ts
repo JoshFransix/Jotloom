@@ -19,9 +19,7 @@ export default defineNuxtConfig({
           content: "Your Creative Hub",
         },
       ],
-      link: [
-        { rel: "icon", type: "image/x-icon", href: "~/public/favicon.ico" },
-      ],
+      link: [{ rel: "icon", type: "image/png", href: "/favicon.ico" }],
     },
     pageTransition: {
       name: "page",
