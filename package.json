@@ -8,6 +8,10 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
+  "engines": {
+    "node": "18.17.1",
+    "npm": "9.x"
+  },
   "devDependencies": {
     "@mdi/font": "^7.2.96",
     "@nuxt/devtools": "latest",
