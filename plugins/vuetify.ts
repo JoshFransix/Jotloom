@@ -1,6 +1,7 @@
 import { ThemeDefinition, createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
+import { VSkeletonLoader } from "vuetify/labs/VSkeletonLoader";
 import "@/assets/scss/abstracts/_override.scss";
 
 const myTheme: ThemeDefinition = {
@@ -18,7 +19,10 @@ export default defineNuxtPlugin((nuxtApp) => {
   const vuetify = createVuetify({
     // your config will come here
     ssr: true,
-    components,
+    components: {
+      ...components,
+      VSkeletonLoader,
+    },
     directives,
     theme: {
       defaultTheme: "myTheme",
@@ -26,10 +30,6 @@ export default defineNuxtPlugin((nuxtApp) => {
         myTheme,
       },
     },
-    // customVariables: [
-    //   // '~/assets/scss/abstracts/_variables.scss',
-    //   '~/assets/scss/abstracts/_mixins.scss',
-    // ],
   });
 
   nuxtApp.vueApp.use(vuetify);

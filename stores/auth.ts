@@ -6,6 +6,7 @@ export const useAuth = defineStore({
     user: null,
     isLoading: false,
     logoutDialog: false,
+    allNotes: [],
   }),
 
   getters: {
@@ -23,6 +24,9 @@ export const useAuth = defineStore({
     },
     SET_LOGOUT(payload: boolean) {
       this.logoutDialog = payload;
+    },
+    SET_NOTES(payload: any) {
+      this.allNotes = payload;
     },
   },
 });

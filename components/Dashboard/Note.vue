@@ -9,7 +9,8 @@
 
                                 <div
                                     class="bottom-content tw-flex tw-w-11/12 tw-justify-between tw-absolute tw-items-center tw-bottom-3">
-                                    <h4 class="tw-text-brand-primary tw-text-xs ">{{ note.date }}</h4>
+                                    <h4 class="tw-text-brand-primary tw-text-xs ">{{ new
+                                        Date(note.created_at).toDateString() }}</h4>
                                     <div class="action-btns">
                                         <v-btn @click="$emit('edit', note)" size="x-small" variant="text" icon>
                                             <v-icon small>mdi-pencil</v-icon>

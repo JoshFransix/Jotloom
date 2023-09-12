@@ -1,30 +1,27 @@
 <template>
     <div class="">
-        <div class="print:tw-transform print:tw-translate-x-[-280px] tw-z-50">
-            <v-navigation-drawer width="200" mobile-breakpoint="767" color="primaryLight" v-model="drawer">
-                <div class="tw-pt-10 tw-flex tw-h-full tw-flex-col">
-                    <div class="tw-mb-20 tw-text-center logo tw-font-bold tw-text-xl">
-                        <h1>Jot<span class="tw-text-brand-primary">Loom</span><span></span></h1>
-                    </div>
-
-                    <div class="tw-mt-[5rem]">
-                        <v-list color="primary" nav>
-                            <v-list-item exact link to="/dashboard"
-                                :active="$route.path.toLowerCase().includes('dashboard')" prepend-icon="mdi-home"
-                                title="My Dashboard" value="myfiles"></v-list-item>
-                            <v-list-item @click="$emit('add-new')" :active="$route.path.toLowerCase().includes('add-new')"
-                                prepend-icon="mdi-plus" title="Add new note" value="shared"></v-list-item>
-                            <!-- <v-list-item prepend-icon="mdi-star" title="Starred" value="starred"></v-list-item> -->
-                        </v-list>
-                    </div>
-
-                    <div class="tw-absolute tw-w-full tw-bottom-4 tw-mx-auto tw-flex tw-justify-center">
-                        <v-btn @click="logoutActive(true)" color="primary" icon>
-                            <v-icon>mdi-logout</v-icon>
-                        </v-btn>
-                    </div>
+        <div>
+            <div class="tw-pt-10 tw-flex tw-h-full tw-flex-col">
+                <div class="tw-mb-20 tw-text-center logo tw-font-bold tw-text-xl sm:tw-text-lg">
+                    <h1 class="tw-text-white">Jot<span class="tw-text-brand-primary">Loom</span><span></span></h1>
                 </div>
-            </v-navigation-drawer>
+
+                <div class="tw-mt-[5rem]">
+                    <v-list bg-color="primaryLight" color="primary" nav>
+                        <v-list-item exact link to="/dashboard" :active="$route.path.toLowerCase().includes('dashboard')"
+                            prepend-icon="mdi-home" title="My Dashboard" value="myfiles"></v-list-item>
+                        <v-list-item @click="$emit('add-new')" :active="$route.path.toLowerCase().includes('add-new')"
+                            prepend-icon="mdi-plus" title="Add new note" value="shared"></v-list-item>
+                        <!-- <v-list-item prepend-icon="mdi-star" title="Starred" value="starred"></v-list-item> -->
+                    </v-list>
+                </div>
+
+                <div class="tw-absolute tw-w-full tw-bottom-4 tw-mx-auto tw-flex tw-justify-center">
+                    <v-btn @click="logoutActive(true)" color="primary" icon>
+                        <v-icon>mdi-logout</v-icon>
+                    </v-btn>
+                </div>
+            </div>
         </div>
         <Logout @close-dialog="logoutActive(false)" />
     </div>
@@ -32,42 +29,32 @@
 <script setup>
 import Logout from '~/components/Logout.vue'
 
-const drawer = useState('drawer', () => true)
+const drawer = ref(true)
 const emit = defineEmits(['drawer', 'add-new', 'logout'])
 
 const props = defineProps({
     showSideNav: {
         type: Boolean,
-        default: false,
+        default: true,
     },
 })
 
 const { showSideNav } = props
 
 watch(showSideNav, (bool, showSideNav) => {
+    console.log(showSideNav)
     drawer.value = bool
 })
 
-watch(drawer, (d, drawerValue) => {
-    emit('drawer', drawer.value)
-})
+// watch(drawer, (d, drawerValue) => {
+//     emit('drawer', drawer.value)
+// })
 
 const authStore = useAuth()
 
 const logoutActive = (value) => {
     authStore.SET_LOGOUT(value)
 }
-
-
-
-// watch: {
-//     showSideNav(bool) {
-//       drawer = bool
-//     },
-//     drawer(d) {
-//       this.$emit('drawer', this.drawer)
-//     },
-//   },
 </script>
 <style lang="scss" scoped>
 :deep {
