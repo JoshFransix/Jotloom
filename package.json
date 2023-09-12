@@ -23,7 +23,6 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
-    "nuxt-vue3-google-signin": "^0.0.9",
     "pinia": "^2.1.6",
     "vuetify": "^3.3.14"
   },
