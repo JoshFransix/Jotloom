@@ -3,7 +3,7 @@
 // import vuetify from "vite-plugin-vuetify";
 
 export default defineNuxtConfig({
-  // ssr: false,
+  ssr: false,
   app: {
     head: {
       title: "JotLoom - Your Creative Hub",
