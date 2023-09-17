@@ -5,13 +5,16 @@
         </div>
 
         <!-- Landing -->
-        <section id="home" class="tw-pt-32 tw-h-screen sm:tw-h-[80vh] sm:tw-pt-52">
+        <section id="home" class="tw-pt-32 tw-h-screen sm:tw-h-[80vh] sm:tw-pt-44">
             <div class="tw-flex tw-text-white tw-flex-col tw-items-center tw-justify-center">
-                <h1 class="tw-text-3xl tw-leading-[1.4rem] tw-text-center tw-font-bold md:tw-text-xl">Sculpting the
+                <h1 data-aos="fade-up" data-aos-duration="600" data-aos-easing="ease-in-out"
+                    class="tw-text-3xl tw-leading-[1.4rem] tw-text-center tw-font-bold md:tw-text-xl">Sculpting the
                     future<span class="tw-text-brand-primary"> Jotspace</span></h1>
-                <p class="tw-my-7 fira">Write and organize your thoughts <span class="tw-text-brand-primary">.</span></p>
+                <p data-aos="fade-up" data-aos-duration="800" data-aos-easing="ease-in-out" class="tw-my-7 fira">Write and
+                    organize your thoughts <span class="tw-text-brand-primary">.</span></p>
                 <div class="">
-                    <landing-image class="tw-w-[500px] tw-h-[500px] sm:tw-w-[400px] sm:tw-h-[400px]"></landing-image>
+                    <landing-image data-aos="zoom-in-up" data-aos-duration="1000" data-aos-easing="ease-in-out"
+                        class="tw-w-[500px] tw-h-[500px] sm:tw-w-[400px] sm:tw-h-[400px]"></landing-image>
                 </div>
             </div>
         </section>
@@ -19,7 +22,8 @@
         <section id="about" class="tw-pt-[10rem]">
             <div
                 class="tw-w-11/12 tw-grid tw-grid-cols-2 tw-gap-x-8 tw-mt-[2rem]  tw-text-white tw-p-8 tw-mx-auto tw-bg-[#14203b] tw-rounded-xl tw-h-[500px] md:tw-grid-cols-1">
-                <div class="left tw-flex tw-flex-col tw-my-auto tw-h-3/4">
+                <div data-aos="fade-up-right" data-aos-duration="700" data-aos-easing="linear"
+                    class="left tw-flex tw-flex-col tw-my-auto tw-h-3/4">
                     <h3 class="tw-text-brand-primary tw-text-sm tw-mb-2 fira">Our Mission</h3>
                     <h1 class="tw-text-3xl md:tw-text-xl"><span class="tw-text-brand-primary">J</span>otloom's<span
                             class="tw-text-brand-primary"> M</span>ission</h1>
@@ -29,7 +33,7 @@
                         ideas effortlessly, which is why we've created a seamless note-taking experience tailored just for
                         you.</p>
                 </div>
-                <div class="right">
+                <div data-aos="fade-up-left" data-aos-duration="700" data-aos-easing="linear" class="right">
                     <about-us-image class="tw-w-full tw-h-full md:tw-mt-6" />
                 </div>
             </div>
@@ -42,7 +46,8 @@
                         class="tw-text-brand-primary">J</span>otloom's<span class="tw-text-brand-primary"> F</span>eatures
                 </h1>
                 <div class="grid tw-mt-8 tw-grid tw-grid-cols-3 tw-gap-4 tw-text-white">
-                    <div v-for="item, i in features" :key="i"
+                    <div data-aos="zoom-out-down" data-aos-duration="900" data-aos-easing="linear"
+                        v-for="item, i in features" :key="i"
                         class="card tw-p-8 tw-outline-offset-[0.1px] tw-outline-brand-primary/75  tw-w-full tw-bg-[#14203B] tw-border-[0.1px] tw-border-[rgba(255,255,255,0.1)] hover:tw-border-brand-primary ">
                         <cross-platform v-if="i == 0" class="tw-mx-auto tw-w-[250px] tw-mb-14" />
                         <password-protection v-if="i == 1" class="tw-mx-auto tw-w-[200px]" />
@@ -57,7 +62,8 @@
         <section id="contact" class="tw-pt-[10rem] tw-pb-[4rem]">
             <div
                 class="tw-w-7/12 tw-text-center tw-mt-[2rem]  tw-text-white tw-p-8 tw-mx-auto tw-shadow-xl tw-outline-offset-[0.1px] tw-outline-brand-primary/75 tw-rounded-xl tw-h-[500px] lg:tw-w-11/12">
-                <div class="left tw-flex tw-flex-col tw-my-auto tw-h-3/4">
+                <div data-aos="zoom-in-down" data-aos-duration="900" data-aos-easing="linear"
+                    class="left tw-flex tw-flex-col tw-my-auto tw-h-3/4">
                     <h3 class="tw-text-brand-primary tw-text-sm tw-mb-2 fira">Contact us</h3>
                     <h1 class="tw-mb-8 tw-text-2xl tw-text-white md:tw-text-xl"><span
                             class="tw-text-brand-primary">L</span>eave a<span class="tw-text-brand-primary"> M</span>essage
@@ -72,9 +78,9 @@
                             placeholder="name@company.com" type="email" v-model="email" required hide-details="auto"
                             class="mb-6"></v-text-field>
 
-                        <v-textarea cols="6" rounded clearable bg-color="rgba(0,0,0,0.01)" base-color="white"
-                            variant="outlined" color="primary" name="message" label="Message" placeholder="Input message"
-                            type="text" v-model="message" required hide-details="auto" class="mb-6"></v-textarea>
+                        <v-textarea cols="6" rounded bg-color="rgba(0,0,0,0.01)" base-color="white" variant="outlined"
+                            color="primary" name="message" label="Message" placeholder="Input message" type="text"
+                            v-model="message" required hide-details="auto" class="mb-6"></v-textarea>
                         <v-btn :loading="isLoading"
                             :disabled="!valid || message == '' || message == null || email === null || email == ''" rounded
                             color="primary" type="submit" width="121" height="50" block
@@ -134,7 +140,6 @@ import AboutUsImage from '~/assets/svg/about-us.vue'
 import CrossPlatform from '~/assets/svg/cross-platform.vue'
 import PasswordProtection from '~/assets/svg/password-protection.vue'
 import VoiceTranslation from '~/assets/svg/voice-translation.vue'
-import ContactUsImage from '~/assets/svg/contact-us.vue'
 import NavBar from '~/components/Nav/NavBar.vue'
 import emailjs from 'emailjs-com';
 
