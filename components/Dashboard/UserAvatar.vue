@@ -17,6 +17,8 @@
                     </div>
                     <v-divider></v-divider>
                     <v-list bg-color="transparent">
+                        <v-list-item @click="$router.push('/')" prepend-icon="mdi-home" title="Back to home"
+                            value="backToHome"></v-list-item>
                         <v-list-item @click="$emit('logout')" prepend-icon="mdi-logout" title="Logout"
                             value="logout"></v-list-item>
                     </v-list>

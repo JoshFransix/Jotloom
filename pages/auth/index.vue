@@ -3,12 +3,12 @@
         <div>
             <div class="left">
                 <v-slide-x-transition leave-absolute hide-on-leave>
-                    <div class="tw-w-8/12 tw-mx-auto tw-mt-10 lg:tw-w-10/12" v-if="!signUp">
+                    <div class="tw-w-8/12 tw-mx-auto tw-mt-10 lg:tw-w-10/12 sm:tw-mt-5" v-if="!signUp">
                         <AuthLogin @toSignup="toSignUp" @login="processLogin" @google-login="googleLogin" />
                     </div>
                 </v-slide-x-transition>
                 <v-slide-x-transition leave-absolute hide-on-leave>
-                    <div class="tw-w-8/12 tw-mx-auto tw-mt-10 lg:tw-w-10/12" v-if="signUp">
+                    <div class="tw-w-8/12 tw-mx-auto tw-mt-10 lg:tw-w-10/12 sm:tw-mt-5" v-if="signUp">
                         <AuthSignUp @toLogin="toLogin" @signUp="processSignUp" @google-signup="googleLogin" />
                     </div>
                 </v-slide-x-transition>

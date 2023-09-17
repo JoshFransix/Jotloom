@@ -16,10 +16,11 @@
 
                 <div class="tw-mt-10 tw-grid tw-grid-cols-1 tw-gap-y-3">
                     <nuxt-link to="/"><v-icon color="primary" class="mr-2">mdi-home</v-icon>Home</nuxt-link>
-                    <nuxt-link to="/"><v-icon color="primary"
+                    <nuxt-link to="/#features"><v-icon color="primary"
                             class="mr-2">mdi-hand-heart-outline</v-icon>Features</nuxt-link>
-                    <nuxt-link to="/"><v-icon color="primary" class="mr-2">mdi-comment-account</v-icon>About Us</nuxt-link>
-                    <nuxt-link to="/"><v-icon color="primary" class="mr-2">mdi-phone-plus-outline</v-icon>Contact
+                    <nuxt-link to="/#about"><v-icon color="primary" class="mr-2">mdi-comment-account</v-icon>About
+                        Us</nuxt-link>
+                    <nuxt-link to="/#contact"><v-icon color="primary" class="mr-2">mdi-phone-plus-outline</v-icon>Contact
                         Us</nuxt-link>
                 </div>
                 <div class="tw-mt-12 tw-pb-6 ">
@@ -38,8 +39,8 @@
 
             </div>
         </v-navigation-drawer>
-        <v-app-bar scroll-behavior="elevate" elevation="0" color="secondary" height="85">
-            <div class="tw-w-10/12 tw-mx-auto tw-flex tw-justify-between tw-items-center">
+        <v-app-bar scroll-threshold="20px" elevation="5" color="secondary" height="85">
+            <div class="tw-backdrop-blur-sm tw-w-10/12 tw-mx-auto tw-flex tw-justify-between tw-items-center">
                 <nuxt-link to="/">
                     <div class="logo tw-font-bold tw-text-xl">
                         <h1>Jot<span class="tw-text-brand-primary">Loom</span><span></span></h1>
@@ -47,9 +48,9 @@
                 </nuxt-link>
                 <div class="nav-links md:tw-hidden">
                     <nuxt-link to="/">Home</nuxt-link>
-                    <nuxt-link to="/">Features</nuxt-link>
-                    <nuxt-link to="/">About Us</nuxt-link>
-                    <nuxt-link to="/">Contact Us</nuxt-link>
+                    <nuxt-link to="/#features">Features</nuxt-link>
+                    <nuxt-link to="/#about">About Us</nuxt-link>
+                    <nuxt-link to="/#contact">Contact Us</nuxt-link>
                 </div>
                 <div>
                     <div v-if="!user" class="tw-flex tw-items-center md:tw-hidden">
