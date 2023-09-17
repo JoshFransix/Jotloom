@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
+    "emailjs-com": "^3.2.0",
     "pinia": "^2.1.6",
     "vuetify": "^3.3.14"
   },
