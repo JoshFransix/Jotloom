@@ -59,6 +59,8 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
   ],
 
+  plugins: [{ src: "@/plugins/aos", ssr: false, mode: "client" }],
+
   pinia: {
     autoImports: [
       // automatically imports `defineStore`

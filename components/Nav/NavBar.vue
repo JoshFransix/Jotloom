@@ -120,6 +120,12 @@ const logoutActive = (value) => {
 <style lang="scss">
 .nav-links a {
     margin: 0 1rem;
+    transition: all .3s ease-in-out;
+
+    &:hover {
+        color: #2fc7de;
+        transition: all .3s ease-in-out;
+    }
 }
 
 .mobileNav {
@@ -133,8 +139,7 @@ const logoutActive = (value) => {
         font-weight: 600;
         width: max-content;
 
-        &:hover,
-        .active {
+        &:hover {
             padding: 6px 16px;
             color: rgba(34, 42, 43, 0.25);
             background: rgba(144, 208, 218, 0.25) !important;
