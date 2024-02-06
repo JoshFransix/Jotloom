@@ -4,7 +4,7 @@
             <nav-bar />
         </div>
 
-        <!-- Landing -->
+        <!-- Landing Section-->
         <section id="home" class="tw-pt-32 tw-h-screen sm:tw-h-[80vh] sm:tw-pt-44">
             <div class="tw-flex tw-text-white tw-flex-col tw-items-center tw-justify-center">
                 <h1 data-aos="fade-up" data-aos-duration="600" data-aos-easing="ease-in-out"
