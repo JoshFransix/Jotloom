@@ -4,6 +4,13 @@
 
 export default defineNuxtConfig({
   ssr: false,
+  
+  runtimeConfig: {
+    public: {
+      apiUrl: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:3000',
+    },
+  },
+  
   app: {
     head: {
       title: "JotLoom - Your Creative Hub",
@@ -37,8 +44,8 @@ export default defineNuxtConfig({
   css: [
     "vuetify/lib/styles/main.sass",
     "@mdi/font/css/materialdesignicons.min.css",
-    "~/assets/css/main.css",
     "~/assets/scss/main.scss",
+    "~/assets/css/main.css",
   ],
   postcss: {
     plugins: {
@@ -55,7 +62,6 @@ export default defineNuxtConfig({
     // },
 
     "@nuxtjs/google-fonts",
-    "@nuxtjs/supabase",
     "@pinia/nuxt",
   ],
 
@@ -71,10 +77,6 @@ export default defineNuxtConfig({
 
   imports: {
     dirs: ["stores"],
-  },
-
-  supabase: {
-    redirect: false,
   },
 
   // Google fonts
@@ -93,8 +95,15 @@ export default defineNuxtConfig({
     define: {
       "process.env.DEBUG": false,
     },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          silenceDeprecations: ['import'],
+        },
+      },
+    },
     ssr: {
-      noExternal: ["vuetify"], // add the vuetify vite plugin
+      noExternal: ["vuetify"],
     },
   },
 });

@@ -1,10 +1,8 @@
-import { ThemeDefinition, createVuetify } from "vuetify";
+import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
-import { VSkeletonLoader } from "vuetify/labs/VSkeletonLoader";
-import "@/assets/scss/abstracts/_override.scss";
 
-const myTheme: ThemeDefinition = {
+const myTheme = {
   dark: false,
   colors: {
     primary: "#2fc7de",
@@ -15,14 +13,9 @@ const myTheme: ThemeDefinition = {
 };
 
 export default defineNuxtPlugin((nuxtApp) => {
-  // Doing something with nuxtApp
   const vuetify = createVuetify({
-    // your config will come here
     ssr: true,
-    components: {
-      ...components,
-      VSkeletonLoader,
-    },
+    components,
     directives,
     theme: {
       defaultTheme: "myTheme",

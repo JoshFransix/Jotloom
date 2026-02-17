@@ -8,22 +8,16 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
-  "engines": {
-    "node": "18.17.1",
-    "npm": "9.x"
-  },
   "devDependencies": {
     "@mdi/font": "^7.2.96",
     "@nuxt/devtools": "latest",
     "@nuxtjs/google-fonts": "^3.0.2",
-    "@nuxtjs/supabase": "^1.0.2",
-    "@supabase/gotrue-js": "^2.51.0",
     "autoprefixer": "^10.4.15",
     "nuxt": "^3.7.0",
     "postcss": "^8.4.28",
     "sass": "^1.66.1",
     "tailwindcss": "^3.3.3",
-    "vite-plugin-vuetify": "^1.0.2"
+    "vite-plugin-vuetify": "^2.0.0"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",

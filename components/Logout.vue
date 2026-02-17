@@ -35,6 +35,7 @@ import { storeToRefs } from 'pinia'
 
 const authStore = useAuth()
 const { logoutDialog } = storeToRefs(authStore)
+const { logout: logoutApi } = useAuthApi()
 
 const emit = defineEmits(['close-dialog'])
 
@@ -43,14 +44,10 @@ const snackbar = ref(false)
 const alertText = ref("");
 const alertColor = ref("info");
 
-const client = useSupabaseClient()
-
 async function logout() {
     try {
         loadLogout.value = true
-        const { error } = await client.auth.signOut()
-        // console.log(user.value)
-        if (error) throw error
+        await logoutApi()
         setTimeout(() => {
             loadLogout.value = false
             window.location = '/'

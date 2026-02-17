@@ -44,18 +44,14 @@
     </div>
 </template>
 <script setup lang="ts">
-
 const authStore = useAuth()
+const { loginWithGoogle, login, signUp: signUpApi } = useAuthApi()
 
 const alertText = ref('')
 const alertColor = ref('')
 const snackbar = ref(false)
 const route = useRoute()
 const router = useRouter()
-
-
-const client = useSupabaseClient()
-const user = useSupabaseUser()
 
 definePageMeta({
     layout: "landing",
@@ -64,44 +60,41 @@ definePageMeta({
 const signUp = ref(false)
 
 onBeforeMount(() => {
+    // Check for Google OAuth callback
+    if (route.query.token) {
+        const token = route.query.token as string
+        const userStr = route.query.user as string
+        
+        if (token && userStr) {
+            authStore.setAuth(JSON.parse(decodeURIComponent(userStr)), token)
+            
+            alertText.value = 'Login successful'
+            alertColor.value = 'green'
+            snackbar.value = true
+            
+            setTimeout(() => {
+                router.push('/dashboard')
+            }, 500)
+            return
+        }
+    }
+
     if ('login' in route.query || 'signin' in route.query) {
         signUp.value = false
     } else if ('signup' in route.query) {
         signUp.value = true
-        console.log(user.value)
     }
 })
 
-async function googleLogin() {
-    // await client.auth.signOut()
-    try {
-        const { data, error } = await client.auth.signInWithOAuth({
-            provider: 'google',
-            options: {
-                redirectTo: 'http://localhost:9000/dashboard'
-            }
-        })
-        if (error) throw error
-        // console.log(user.value)
-    } catch (error: any) {
-        alertText.value = error.message
-        alertColor.value = 'red'
-        snackbar.value = true
-    }
+function googleLogin() {
+    loginWithGoogle()
 }
 
 async function processSignUp(value: any) {
     const { full_name, email, password } = value
     try {
         authStore.SET_LOADER(true)
-        const { data, error } = await client.auth.signUp({
-            email, password, options: {
-                data: {
-                    full_name
-                }
-            }
-        })
-        if (error) throw error
+        await signUpApi(full_name, email, password)
         authStore.SET_LOADER(false)
         alertText.value = 'Account successfully created'
         alertColor.value = 'green'
@@ -109,22 +102,18 @@ async function processSignUp(value: any) {
         setTimeout(() => {
             router.push('/dashboard')
         }, 1000)
-        // console.log(user)
     } catch (error: any) {
         authStore.SET_LOADER(false)
         alertText.value = error.message
         alertColor.value = 'red'
         snackbar.value = true
     }
-
 }
 
 async function processLogin(value: any) {
-    // console.log(value)
     try {
         authStore.SET_LOADER(true)
-        const { data, error } = await client.auth.signInWithPassword({ ...value })
-        if (error) throw error
+        await login(value.email, value.password)
         authStore.SET_LOADER(false)
         alertText.value = 'Login successful'
         alertColor.value = 'green'
@@ -132,7 +121,6 @@ async function processLogin(value: any) {
         setTimeout(() => {
             router.push('/dashboard')
         }, 1000)
-        // console.log(data)
     } catch (error: any) {
         authStore.SET_LOADER(false)
         alertText.value = error.message
@@ -142,13 +130,11 @@ async function processLogin(value: any) {
 }
 
 const toLogin = () => {
-    // console.log('login')
     router.push('/auth?login')
     signUp.value = false
-    // console.log(client.auth.signUp({}))
 }
+
 const toSignUp = () => {
-    // console.log('signup')
     router.push('/auth?signup')
     signUp.value = true
 }

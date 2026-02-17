@@ -1,8 +1,4 @@
-@use "vuetify" with (
-  $utilities: false,
-  $body-font-family: "Poppins"
-);
-
+// Vuetify overrides
 .v-application {
   .v-btn {
     text-transform: none;

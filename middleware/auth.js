@@ -1,8 +1,12 @@
 export default defineNuxtRouteMiddleware(() => {
-  const user = useSupabaseUser();
+  const authStore = useAuth();
+  
+  // Load auth from localStorage on first access
+  if (process.client && !authStore.token) {
+    authStore.loadAuthFromStorage();
+  }
 
-  if (!user.value) {
-    console.log(user.value);
-    return navigateTo("/");
-  } 
+  if (!authStore.isAuthenticated) {
+    return navigateTo("/auth?login");
+  }
 });

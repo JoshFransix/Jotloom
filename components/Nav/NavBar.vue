@@ -69,17 +69,17 @@
                         <v-menu :close-on-content-click="false">
                             <template v-slot:activator="{ props }">
                                 <div v-bind="props" class="tw-cursor-pointer">
-                                    <v-avatar size="35" v-if="user.user_metadata.picture"
-                                        :image="user.user_metadata.picture" color="primary"></v-avatar>
-                                    <v-avatar v-else color="primary">{{ user.user_metadata.full_name[0].toUpperCase()
+                                    <v-avatar size="35" v-if="user?.avatar_url"
+                                        :image="user.avatar_url" color="primary"></v-avatar>
+                                    <v-avatar v-else color="primary">{{ user?.full_name?.[0]?.toUpperCase() || 'U'
                                     }}</v-avatar>
                                     <v-icon color="#ddd">mdi-chevron-down</v-icon>
                                 </div>
                             </template>
                             <v-card min-width="300px" ripple color="#14203B" border="primary" rounded>
                                 <div class="tw-px-4 tw-py-3">
-                                    <h1>{{ user.user_metadata.full_name }}</h1>
-                                    <h3 class="tw-text-sm tw-mt-2">{{ user.email }}</h3>
+                                    <h1>{{ user?.full_name || 'User' }}</h1>
+                                    <h3 class="tw-text-sm tw-mt-2">{{ user?.email || '' }}</h3>
                                 </div>
                                 <v-divider></v-divider>
                                 <v-list bg-color="transparent">
@@ -109,7 +109,13 @@ import Logout from '~/components/Logout.vue'
 
 const authStore = useAuth()
 const drawer = ref(false)
-const user = useSupabaseUser()
+
+// Load auth from storage if not already loaded
+if (process.client && !authStore.token) {
+    authStore.loadAuthFromStorage()
+}
+
+const user = computed(() => authStore.getUser)
 
 const logoutActive = (value) => {
     authStore.SET_LOGOUT(value)
