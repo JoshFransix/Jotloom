@@ -4,7 +4,6 @@
 
 [build.environment]
   NODE_VERSION = "20.19.0"
-  NPM_FLAGS = "--legacy-peer-deps"
 
 [[redirects]]
   from = "/*"

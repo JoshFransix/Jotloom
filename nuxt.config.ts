@@ -5,6 +5,10 @@
 export default defineNuxtConfig({
   ssr: false,
   
+  nitro: {
+    preset: 'static',
+  },
+  
   runtimeConfig: {
     public: {
       apiUrl: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:3000',
